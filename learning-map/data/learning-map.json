@@ -1,0 +1,724 @@
+{
+  "schema": "learning-map/v2",
+  "meta": {
+    "id": "mac_muffler_assembly",
+    "title": "MAC Valves 消音器自動組裝機 (RPM005)",
+    "summary": "依 Pp-313-MVT-RPM005 官方流程圖：進料檢查 → 震動桶入料 → 零件結合 → VC-3 點膠 → 膠量檢查 → 輸送帶烘乾＆壓合 → 成品；NG 件全數入 NG 桶。",
+    "version": "2.0.0",
+    "author": "Howard",
+    "created_at": "2026-05-13",
+    "updated_at": "2026-05-13",
+    "ontology_ref": "learning-map/v2",
+    "resources_ref": "resources.json",
+    "entry": "part_check"
+  },
+  "nodes": {
+    "part_check": {
+      "core": {
+        "name": "進料檢查",
+        "name_en": "Part Check",
+        "type": "action",
+        "feynman": "像「上菜前先檢查食材」——零件外觀規格不對就不准入線。",
+        "tags": [
+          "#human",
+          "流程",
+          "START"
+        ]
+      },
+      "detail": {
+        "detail": "新批號零件進線前先目視 + 量測，確認與工單一致再倒入震動桶。",
+        "actions": [
+          "核對零件批號與工單。",
+          "目視抽檢外觀、毛邊、尺寸。"
+        ],
+        "common_confusion": "誤以為供應商保證良率就可省略；混料一次整批報廢。",
+        "checkpoints": [
+          "首件量測 OK。",
+          "批號標籤與工單一致。"
+        ]
+      },
+      "extra": {
+        "tips": "首件不過就停線，別硬上。"
+      }
+    },
+    "vibration_bowl": {
+      "core": {
+        "name": "震動桶入料",
+        "name_en": "Feed Part",
+        "type": "action",
+        "feynman": "像「排隊輸送帶」——靠震動把亂跳的零件排成同一方向。",
+        "tags": [
+          "#machine",
+          "流程",
+          "供料"
+        ]
+      },
+      "detail": {
+        "detail": "透過振幅與軌道角度將零件方向排好供手臂抓取。",
+        "actions": [
+          "倒料前清除桶底切屑。",
+          "依規格調整震動頻率。"
+        ],
+        "common_confusion": "頻率調太高反而把零件震飛或堵料。",
+        "checkpoints": [
+          "出料口零件方向一致。",
+          "桶內無雙料堆疊。"
+        ]
+      },
+      "extra": {
+        "examples": "新料倒入後先空轉 30 秒，讓零件自然排齊再啟動程式。"
+      }
+    },
+    "muffler": {
+      "core": {
+        "name": "消音器",
+        "name_en": "Muffler",
+        "type": "concept",
+        "feynman": "像漢堡裡的「肉」——把直噴氣流打散、降速再排出，所以噪音變小。",
+        "tags": [
+          "主件"
+        ]
+      },
+      "detail": {
+        "detail": "金屬燒結件，內部多孔讓高壓氣體分散後排放。",
+        "actions": [
+          "檢查表面無變形或缺角。",
+          "確認方向後放入震動桶。"
+        ],
+        "common_confusion": "誤以為消音器只是「擋住氣」，其實是「分散氣」。",
+        "checkpoints": [
+          "外觀無毛邊。",
+          "重量符合規格。"
+        ],
+        "resources": [
+          "res_001#c1"
+        ]
+      },
+      "extra": {
+        "definition": "用於把高速直噴氣流轉成分散、減速、再排出的金屬零件。"
+      }
+    },
+    "retainer_plug": {
+      "core": {
+        "name": "塞子",
+        "name_en": "Retainer Plug",
+        "type": "concept",
+        "feynman": "像漢堡裡的「麵包」——是消音器要塞進去的底座，承擔組裝定位。",
+        "tags": [
+          "主件"
+        ]
+      },
+      "detail": {
+        "detail": "帶內螺紋的金屬塞，消音器塗膠後壓入此件完成組裝。",
+        "actions": [
+          "檢查螺紋無破損。",
+          "確認螺紋孔潔淨無切屑。"
+        ],
+        "common_confusion": "誤把退料用的塞子當成主件塞子，混料造成不良。",
+        "checkpoints": [
+          "螺紋根部乾淨。",
+          "規格與工單一致。"
+        ]
+      },
+      "extra": {
+        "tips": "若孔內殘膠未清，下批壓合會偏位。"
+      }
+    },
+    "nachi_robot": {
+      "core": {
+        "name": "NACHI 機械手臂",
+        "name_en": "NACHI Robot Arm",
+        "type": "tool",
+        "feynman": "像工廠裡的「全能外送員」——抓零件、塗膠、放定位一條龍。",
+        "tags": [
+          "核心設備"
+        ]
+      },
+      "detail": {
+        "detail": "六軸工業機器手臂，負責搬運消音器、組合塞子，並帶點膠針頭執行塗膠。",
+        "actions": [
+          "開機前確認示教器無報警。",
+          "每週檢查各軸潤滑與背隙。"
+        ],
+        "common_confusion": "以為手臂沒動就是程式問題；其實多半卡在感測器訊號未綠燈。",
+        "checkpoints": [
+          "原點復歸成功。",
+          "三色燈呈綠燈穩定運作。"
+        ],
+        "resources": [
+          "res_001#c3"
+        ]
+      },
+      "extra": {
+        "tips": "報警先看示教器訊息再決定是否手動排除。"
+      }
+    },
+    "parts_assembly": {
+      "core": {
+        "name": "零件結合",
+        "name_en": "Parts Assembly",
+        "type": "action",
+        "feynman": "像「夾肉進麵包」——機械手臂把消音器先放到塞子上組合。",
+        "tags": [
+          "#decision",
+          "流程",
+          "決策點"
+        ]
+      },
+      "detail": {
+        "detail": "手臂依程式把消音器與塞子初步結合定位，OK 才往點膠站，NG 進 NG 桶。",
+        "actions": [
+          "確認手臂夾爪與治具對位。",
+          "觀察感測器確認結合到位。"
+        ],
+        "common_confusion": "誤以為「夾到就算結合」；位置偏移會被視覺判 NG。",
+        "checkpoints": [
+          "感測器顯示結合到位。",
+          "無重複/缺件報警。"
+        ]
+      },
+      "extra": {
+        "definition": "點膠前的初步組合與位置確認步驟，是 NG 第一道分流點。"
+      }
+    },
+    "dispense_needle": {
+      "core": {
+        "name": "VC-3 點膠",
+        "name_en": "VC-3 Dispensing",
+        "type": "action",
+        "feynman": "像「擠美乃滋的細嘴瓶」——對準螺紋中心擠出剛好的量。",
+        "tags": [
+          "#machine",
+          "流程",
+          "耗材"
+        ]
+      },
+      "detail": {
+        "detail": "點膠針頭對準螺紋根部擠出 VC-3 膠水；針頭每日需清潔避免堵塞。",
+        "actions": [
+          "下班前用清針或更換新針。",
+          "對中校正後再啟動連續生產。"
+        ],
+        "common_confusion": "有噴膠就以為 OK；其實位置偏、膠量不均都會被視覺判 NG。",
+        "checkpoints": [
+          "針頭無乾涸殘膠。",
+          "中心對位點落在螺紋圓心。"
+        ],
+        "resources": [
+          "res_001#c5"
+        ]
+      },
+      "extra": {
+        "misconception": "省略每日清針隔天就會塞死。"
+      }
+    },
+    "vc3_glue": {
+      "core": {
+        "name": "VC-3 膠水",
+        "name_en": "VC-3 Adhesive",
+        "type": "tool",
+        "feynman": "像漢堡裡的「美乃滋」——一抹下去把肉跟麵包永久黏合。",
+        "tags": [
+          "耗材"
+        ]
+      },
+      "detail": {
+        "detail": "厭氧型螺紋膠，需與甲苯按比例稀釋才能流動順暢。",
+        "actions": [
+          "膠桶存量隨時維持 10% 以上。",
+          "稀釋後搖晃均勻再上機。"
+        ],
+        "common_confusion": "誤以為越濃越黏越好；濃度過高反而難流入螺紋根部。",
+        "checkpoints": [
+          "膠桶開封日期 <90 天。",
+          "稀釋後膠色一致。"
+        ],
+        "resources": [
+          "res_001#c4"
+        ]
+      },
+      "extra": {
+        "misconception": "高濃度=高強度。實際上需要正確稀釋讓膠水滲入螺紋根部填充率達 75%。"
+      }
+    },
+    "dilution_ratio": {
+      "core": {
+        "name": "稀釋比例",
+        "name_en": "Dilution Ratio",
+        "type": "action",
+        "feynman": "像調醬料——10 份美乃滋配 0.3 份水才會剛好順口。",
+        "tags": [
+          "#human",
+          "參數"
+        ]
+      },
+      "detail": {
+        "detail": "VC-3:甲苯 = 10:0.3 (約 3%)，提升流動性並縮短乾燥時間。",
+        "actions": [
+          "精準量取 3% 甲苯加入主膠。",
+          "稀釋後靜置 5 分鐘排氣泡再上機。"
+        ],
+        "common_confusion": "目測加甲苯導致濃度漂移。",
+        "checkpoints": [
+          "稀釋比例紀錄已簽核。",
+          "流動性試滴呈連續滴狀。"
+        ]
+      },
+      "extra": {
+        "tips": "甲苯易揮發，稀釋後 4 小時內用完最佳。"
+      }
+    },
+    "sensor": {
+      "core": {
+        "name": "膠量檢查 (感測器)",
+        "name_en": "Glue Quantity Check",
+        "type": "tool",
+        "feynman": "像「機器的眼睛」——隨時看膠量塗夠沒、有沒有達標。",
+        "tags": [
+          "流程",
+          "檢測",
+          "決策點"
+        ]
+      },
+      "detail": {
+        "detail": "視覺感測器拍照分析螺紋根部膠量覆蓋面積，判斷 OK 或 NG。",
+        "actions": [
+          "每班次以無塵布擦拭鏡面。",
+          "確認支架未受撞擊位移。"
+        ],
+        "common_confusion": "燈號異常就以為感測器壞了；多半只是鏡面有灰塵。",
+        "checkpoints": [
+          "有料顯示綠燈、無料顯示紅燈。",
+          "鏡面無油污或粉塵。"
+        ]
+      },
+      "extra": {
+        "misconception": "感測器很少真壞，先清潔再判斷。"
+      }
+    },
+    "fill_rate_75": {
+      "core": {
+        "name": "膠量填充率 75%",
+        "name_en": "Fill Rate ≥75%",
+        "type": "action",
+        "feynman": "像「漢堡醬料蓋得夠不夠滿」——超過 3/4 才算合格。",
+        "tags": [
+          "#decision",
+          "品質",
+          "規格"
+        ]
+      },
+      "detail": {
+        "detail": "螺紋根部填充率須 ≥ 75%，最小覆蓋面積 5.0，由視覺感測器即時檢核。",
+        "actions": [
+          "視覺結果未達 75% 立即停機檢查針頭。",
+          "每班抽樣破壞測試確認膠強度。"
+        ],
+        "common_confusion": "膠看起來多就以為合格；視覺看的是「面積」不是「體積」。",
+        "checkpoints": [
+          "面積數值 ≥ 5.0。",
+          "覆蓋率 ≥ 75% 連續 10 件。"
+        ],
+        "resources": [
+          "res_001#c2"
+        ]
+      },
+      "extra": {
+        "definition": "螺紋根部膠水覆蓋面積 ≥ 5.0 且覆蓋率 ≥ 75% 的品質允收標準。"
+      }
+    },
+    "press_cylinder": {
+      "core": {
+        "name": "輸送帶烘乾＆壓合區",
+        "name_en": "Conveyor / Drying / Press",
+        "type": "action",
+        "feynman": "像最後「壓實 + 烤一下」——把消音器壓進塞子並烘到膠固化。",
+        "tags": [
+          "#machine",
+          "流程",
+          "核心設備"
+        ]
+      },
+      "detail": {
+        "detail": "輸送帶帶動工件進入烘乾區固化 VC-3，再由壓合氣缸 (0.5~0.6 MPa) 壓入塞子完成組裝。",
+        "actions": [
+          "確認氣壓表落在 0.5 ~ 0.6 MPa。",
+          "壓合行程到位後檢查無翹起。"
+        ],
+        "common_confusion": "壓力越大越好；過壓會把消音器壓變形。",
+        "checkpoints": [
+          "氣壓在規範區間。",
+          "壓合後高度量測一致。"
+        ]
+      },
+      "extra": {
+        "definition": "整合輸送帶、烘乾、壓合三段功能的最終組裝站。"
+      }
+    },
+    "ng_bin_assembly": {
+      "core": {
+        "name": "NG 桶 (結合)",
+        "name_en": "NG Bin · Assembly",
+        "type": "risk",
+        "feynman": "像「組裝站旁的淘汰盒」——結合失敗的件直接丟這裡。",
+        "tags": [
+          "品質",
+          "失敗路徑"
+        ]
+      },
+      "detail": {
+        "detail": "零件結合 NG 的工件入此桶，原因多為位置偏移、缺件或重複夾取。",
+        "actions": [
+          "每班結束記錄結合 NG 數量。",
+          "連續 ≥3 件結合 NG 立即停線檢查治具。"
+        ],
+        "common_confusion": "把結合 NG 件再投回震動桶；應隔離分析後報廢。",
+        "checkpoints": [
+          "NG 桶與結合站相鄰且醒目。",
+          "當班結合 NG 紀錄表已簽核。"
+        ]
+      },
+      "extra": {
+        "tips": "結合 NG 上升通常是治具磨耗或手臂偏移的先兆。"
+      }
+    },
+    "ng_bin_glue": {
+      "core": {
+        "name": "NG 桶 (膠量)",
+        "name_en": "NG Bin · Glue",
+        "type": "risk",
+        "feynman": "像「點膠站旁的淘汰盒」——膠量不達標的件丟這裡。",
+        "tags": [
+          "品質",
+          "失敗路徑"
+        ]
+      },
+      "detail": {
+        "detail": "膠量檢查未達 75% 填充率的工件入此桶，原因多為針頭堵塞、對位偏移或膠水稀釋失準。",
+        "actions": [
+          "每班結束記錄膠量 NG 數量。",
+          "連續 ≥3 件膠量 NG 立即清針或重稀釋膠水。"
+        ],
+        "common_confusion": "膠量不足只是「再補一點就好」；實際膠已乾化必須整件報廢。",
+        "checkpoints": [
+          "NG 桶與感測站相鄰且醒目。",
+          "當班膠量 NG 紀錄表已簽核。"
+        ]
+      },
+      "extra": {
+        "tips": "膠量 NG 上升通常是針頭、感測器或稀釋比例其一出狀況。"
+      }
+    },
+    "safety_stop": {
+      "core": {
+        "name": "緊急停止",
+        "name_en": "Emergency Stop",
+        "type": "risk",
+        "feynman": "像「拔總電源」——一拍下去整台立刻停，是最後防線。",
+        "tags": [
+          "安全",
+          "高風險"
+        ]
+      },
+      "detail": {
+        "detail": "嚴禁自動運轉時將手或工具探入工作區；維修須先按 E-STOP 或切手動。",
+        "actions": [
+          "進機械範圍前先按 EMERGENCY STOP。",
+          "復歸前確認所有人員退出安全區。"
+        ],
+        "common_confusion": "以為門關上就安全；異物或感測髒污也可能讓系統誤啟動。",
+        "checkpoints": [
+          "E-STOP 已按下且燈號顯示鎖定。",
+          "鑰匙切換至手動模式。"
+        ],
+        "resources": [
+          "res_001#c6"
+        ]
+      },
+      "extra": {
+        "misconception": "急停按下不會壞機；不按才會傷人。"
+      }
+    },
+    "finished_product": {
+      "core": {
+        "name": "成品 (END)",
+        "name_en": "Finished Assembly",
+        "type": "output",
+        "feynman": "像端上桌的漢堡——肉、麵包、醬料一次到位就完成。",
+        "tags": [
+          "產出",
+          "END"
+        ]
+      },
+      "detail": {
+        "detail": "Muffler 完全壓入 Retainer Plug 且 VC-3 螺紋填充率 ≥ 75% 的合格件。",
+        "actions": [
+          "外觀目視無膠溢出或翹起。",
+          "依抽樣計畫做拉力或扭力測試。"
+        ],
+        "common_confusion": "壓進去就合格；其實還要看膠量與高度。",
+        "checkpoints": [
+          "壓合高度落在公差內。",
+          "視覺判定 PASS。"
+        ]
+      },
+      "extra": {
+        "definition": "通過視覺檢核與壓合高度量測的可出貨組裝件。"
+      }
+    }
+  },
+  "edges": [
+    {
+      "from": "part_check",
+      "to": "vibration_bowl",
+      "type": "depends_on",
+      "label": "OK 後入料",
+      "weight": 0.95
+    },
+    {
+      "from": "vibration_bowl",
+      "to": "muffler",
+      "type": "depends_on",
+      "label": "排向供料",
+      "weight": 0.8
+    },
+    {
+      "from": "vibration_bowl",
+      "to": "retainer_plug",
+      "type": "depends_on",
+      "label": "排向供料",
+      "weight": 0.8
+    },
+    {
+      "from": "muffler",
+      "to": "parts_assembly",
+      "type": "depends_on",
+      "label": "供肉",
+      "weight": 0.85
+    },
+    {
+      "from": "retainer_plug",
+      "to": "parts_assembly",
+      "type": "depends_on",
+      "label": "供麵包",
+      "weight": 0.85
+    },
+    {
+      "from": "nachi_robot",
+      "to": "parts_assembly",
+      "type": "depends_on",
+      "label": "手臂執行結合",
+      "weight": 0.9
+    },
+    {
+      "from": "parts_assembly",
+      "to": "dispense_needle",
+      "type": "depends_on",
+      "label": "OK 後點膠",
+      "weight": 0.95,
+      "branch": "yes"
+    },
+    {
+      "from": "parts_assembly",
+      "to": "ng_bin_assembly",
+      "type": "influences",
+      "label": "結合 NG 入桶",
+      "weight": 0.6,
+      "branch": "no"
+    },
+    {
+      "from": "dispense_needle",
+      "to": "vc3_glue",
+      "type": "depends_on",
+      "label": "輸送膠水",
+      "weight": 0.8
+    },
+    {
+      "from": "vc3_glue",
+      "to": "dilution_ratio",
+      "type": "influences",
+      "label": "需 3% 稀釋",
+      "weight": 0.7
+    },
+    {
+      "from": "dispense_needle",
+      "to": "sensor",
+      "type": "depends_on",
+      "label": "送入檢核",
+      "weight": 0.9
+    },
+    {
+      "from": "sensor",
+      "to": "fill_rate_75",
+      "type": "validates",
+      "label": "判定 ≥75%",
+      "weight": 0.95
+    },
+    {
+      "from": "fill_rate_75",
+      "to": "press_cylinder",
+      "type": "depends_on",
+      "label": "OK 進壓合",
+      "weight": 0.95,
+      "branch": "yes"
+    },
+    {
+      "from": "fill_rate_75",
+      "to": "ng_bin_glue",
+      "type": "influences",
+      "label": "未達標入桶",
+      "weight": 0.6,
+      "branch": "no"
+    },
+    {
+      "from": "press_cylinder",
+      "to": "finished_product",
+      "type": "depends_on",
+      "label": "壓合烘乾完成",
+      "weight": 0.95
+    },
+    {
+      "from": "safety_stop",
+      "to": "nachi_robot",
+      "type": "blocks",
+      "label": "急停斷電",
+      "weight": 0.95
+    }
+  ],
+  "trails": [
+    {
+      "name": "RPM005 官方流程",
+      "intent": "依官方 Flow Chart 走完一遍：進料 → 入料 → 結合 → 點膠 → 檢查 → 壓合 → 成品。",
+      "audience": "現場作業員",
+      "estimated_hours": 2,
+      "success_criteria": "能不看資料說出 7 個主節點與兩個 NG 分流點。",
+      "steps": [
+        {
+          "node": "part_check",
+          "prerequisite": [],
+          "next": [
+            "vibration_bowl"
+          ],
+          "blockers": []
+        },
+        {
+          "node": "vibration_bowl",
+          "prerequisite": [
+            "part_check"
+          ],
+          "next": [
+            "parts_assembly"
+          ],
+          "blockers": []
+        },
+        {
+          "node": "parts_assembly",
+          "prerequisite": [
+            "vibration_bowl"
+          ],
+          "next": [
+            "dispense_needle"
+          ],
+          "blockers": [
+            "ng_bin_assembly"
+          ]
+        },
+        {
+          "node": "dispense_needle",
+          "prerequisite": [
+            "parts_assembly"
+          ],
+          "next": [
+            "sensor"
+          ],
+          "blockers": []
+        },
+        {
+          "node": "sensor",
+          "prerequisite": [
+            "dispense_needle"
+          ],
+          "next": [
+            "fill_rate_75"
+          ],
+          "blockers": []
+        },
+        {
+          "node": "fill_rate_75",
+          "prerequisite": [
+            "sensor"
+          ],
+          "next": [
+            "press_cylinder"
+          ],
+          "blockers": [
+            "ng_bin_glue"
+          ]
+        },
+        {
+          "node": "press_cylinder",
+          "prerequisite": [
+            "fill_rate_75"
+          ],
+          "next": [
+            "finished_product"
+          ],
+          "blockers": []
+        },
+        {
+          "node": "finished_product",
+          "prerequisite": [
+            "press_cylinder"
+          ],
+          "next": [],
+          "blockers": []
+        }
+      ]
+    },
+    {
+      "name": "故障排除與設備維護",
+      "intent": "能自行處理常見報警並進行定期保養。",
+      "audience": "設備維修員",
+      "estimated_hours": 4,
+      "success_criteria": "能看懂 I/O 表並排除感測器與供料系統故障。",
+      "steps": [
+        {
+          "node": "press_cylinder",
+          "prerequisite": [],
+          "next": [
+            "sensor"
+          ],
+          "blockers": []
+        },
+        {
+          "node": "sensor",
+          "prerequisite": [
+            "press_cylinder"
+          ],
+          "next": [
+            "dispense_needle"
+          ],
+          "blockers": []
+        },
+        {
+          "node": "dispense_needle",
+          "prerequisite": [
+            "sensor"
+          ],
+          "next": [
+            "vibration_bowl"
+          ],
+          "blockers": []
+        },
+        {
+          "node": "vibration_bowl",
+          "prerequisite": [
+            "dispense_needle"
+          ],
+          "next": [],
+          "blockers": []
+        }
+      ]
+    }
+  ]
+}

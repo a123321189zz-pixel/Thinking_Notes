@@ -1,0 +1,62 @@
+{
+  "schema": "resources/v1",
+  "version": "1.0.0",
+  "graph_id": "mac_muffler_assembly",
+  "resources": [
+    {
+      "id": "res_001",
+      "type": "pdf",
+      "title": "Pp-313-MVT-RPM005 消音器自動組裝機作業指導書",
+      "url": "internal://Pp-313-MVT-RPM005",
+      "author": "MAC Valves 製造部",
+      "accessed_at": "2026-05-13",
+      "chunks": [
+        {
+          "id": "c1",
+          "text": "把『高速直噴的氣』變成『分散、減速、再排出』。",
+          "timestamp": "品質要求"
+        },
+        {
+          "id": "c2",
+          "text": "螺紋根部填充率至少 75%，最小面積為 5.0。",
+          "timestamp": "品質要求"
+        },
+        {
+          "id": "c3",
+          "text": "同時按 ENABLE+SHIFT+GO，跳出的訊息選擇『可行』。",
+          "timestamp": "啟動"
+        },
+        {
+          "id": "c4",
+          "text": "VC-3 與甲苯依 10:0.3 比例稀釋，膠桶存量維持 10% 以上。",
+          "timestamp": "膠水管理"
+        },
+        {
+          "id": "c5",
+          "text": "針頭無乾涸殘膠，位置對準螺紋中心。",
+          "timestamp": "啟動前確認事項"
+        },
+        {
+          "id": "c6",
+          "text": "嚴禁在設備自動運轉狀態下，將手或任何工具探入機器工作範圍內。",
+          "timestamp": "安全注意事項"
+        }
+      ]
+    },
+    {
+      "id": "res_002",
+      "type": "notebook_lm",
+      "title": "現場保養口述紀錄",
+      "url": "internal://shopfloor-notes",
+      "author": "現場領班",
+      "accessed_at": "2026-05-13",
+      "chunks": [
+        {
+          "id": "c1",
+          "text": "不清針頭明天就塞死了；不清過濾網就像清冷氣濾網一樣，不清它就吸不進空氣。",
+          "timestamp": "5. 保養"
+        }
+      ]
+    }
+  ]
+}
