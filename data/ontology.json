@@ -1,0 +1,88 @@
+{
+  "schema": "ontology/v1",
+  "version": "1.0.0",
+  "description": "知識圖譜的語意憲法：定義 node 與 edge 的語意分類與規則。完全不含視覺屬性。",
+  "node_types": [
+    {
+      "id": "concept",
+      "label": "概念",
+      "semantic": "穩定與結構：抽象知識、定義、心智模型。"
+    },
+    {
+      "id": "action",
+      "label": "操作",
+      "semantic": "動能與執行：可被使用者實際採取的步驟或行動。"
+    },
+    {
+      "id": "tool",
+      "label": "工具",
+      "semantic": "輔助與手段：完成 action 所需的工具、平台或服務。"
+    },
+    {
+      "id": "risk",
+      "label": "風險",
+      "semantic": "警示與阻斷：可能造成失敗、損失或卡關的點。"
+    },
+    {
+      "id": "output",
+      "label": "結果",
+      "semantic": "收斂與價值：最終產出、里程碑或交付物。"
+    }
+  ],
+  "edge_types": [
+    {
+      "id": "foundation",
+      "semantic": "基礎（必須先懂才能往下）",
+      "transitive": true,
+      "acyclic": true
+    },
+    {
+      "id": "depends_on",
+      "semantic": "依賴（順序上需要前者）",
+      "transitive": true,
+      "acyclic": true
+    },
+    {
+      "id": "influences",
+      "semantic": "影響（相關但非強制）",
+      "transitive": false,
+      "acyclic": false
+    },
+    {
+      "id": "extends",
+      "semantic": "延伸（深化或變體）",
+      "transitive": true,
+      "acyclic": true
+    },
+    {
+      "id": "contains",
+      "semantic": "包含（父子結構）",
+      "transitive": true,
+      "acyclic": true
+    },
+    {
+      "id": "blocks",
+      "semantic": "阻礙（卡點、反例、互斥）",
+      "transitive": false,
+      "acyclic": false
+    },
+    {
+      "id": "validates",
+      "semantic": "驗證（檢核、測試、回饋）",
+      "transitive": false,
+      "acyclic": false
+    }
+  ],
+  "rules": [
+    "foundation 邊集合必須形成 DAG（無環）。",
+    "depends_on 邊集合必須形成 DAG（無環）。",
+    "risk 類型節點不可作為整張圖的 meta.entry（但可作為 trail 內 step 起點，例如風險控管路徑）。",
+    "blocks 邊不可指向 output 類型節點。",
+    "每個 trail step 必須引用存在於 nodes 中的 id。",
+    "[v2 SINGLE-EDGE] 同一對 (from, to) 之間最多只能有一條邊。若有多重語意，選最主導者，次要語意改用 trail.blockers / node.tags 表達。"
+  ],
+  "roadmap": {
+    "v2": "Single-edge mode. (from, to) is unique. Dominant-semantic-wins.",
+    "v3": "Multi-relation mode. edge.type → edge.relations[] = [{type, label, weight}]. Migration: each v2 edge becomes a relations[] with one element. Renderer groups multi-relation edges visually (e.g. parallel curves)."
+  }
+}
